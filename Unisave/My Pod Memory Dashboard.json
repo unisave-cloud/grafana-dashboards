@@ -19,6 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -27,6 +28,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Memory usage of unisave containers aggregated by container name (multiple container instances are aggregated).",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -41,7 +43,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 31,
+            "fillOpacity": 100,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -110,7 +112,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "container_memory_usage_bytes{pod!=\"\",namespace=~\"unisave(-dev|-staging)?\"}",
+          "expr": "sum(container_memory_usage_bytes{container!=\"\",namespace=~\"unisave(-dev|-staging)?\"}) by (container)",
           "instant": false,
           "interval": "",
           "legendFormat": "{{pod}}",
@@ -118,7 +120,7 @@
           "refId": "A"
         }
       ],
-      "title": "Pod Memory Usage",
+      "title": "Container(s) Memory Usage",
       "type": "timeseries"
     }
   ],
@@ -128,7 +130,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
