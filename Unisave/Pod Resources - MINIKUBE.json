@@ -15,11 +15,11 @@
       }
     ]
   },
-  "description": "Shows memory usage of individual Unisave pods.",
+  "description": "Shows resource usage of individual Unisave pods.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 7,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -123,6 +123,107 @@
       ],
       "title": "Pod(s) Memory Usage",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(label_replace(rate(container_cpu_usage_seconds_total{namespace=\"unisave-dev\"}[1m]), \"pod\", \"$1\", \"pod\", \"(.*)-[a-z0-9]{8,10}-[a-z0-9]{5}\")) by (pod)",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{pod}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Pod(s) CPU Usage",
+      "type": "timeseries"
     }
   ],
   "schemaVersion": 39,
@@ -136,8 +237,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Pod Memory Dashboard - MINIKUBE",
+  "title": "Pod Resources - MINIKUBE",
   "uid": "33NeuNzA2c43MX",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
